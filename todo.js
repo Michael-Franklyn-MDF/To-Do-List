@@ -58,4 +58,10 @@ function loadTasks() {
     tasks.forEach(task => addTaskToDOM(task.text, task.done));
 }
 
+// Get all tasks from local storage
+function getTasks(){
+    return JSON.parse(localStorage.getItem('tasks')) || [];
+}
+
+//Remove tasks from local storage
 
