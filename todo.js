@@ -27,7 +27,7 @@ function addTaskToDOM(taskText, done = false){
         li.classList.toggle('done');
         updateTaskStatus(taskText, li.classList.contains('done'));
     })
-}
+
     //remove btn
     const removeBtn = document.createElement('button')
 
@@ -36,11 +36,13 @@ function addTaskToDOM(taskText, done = false){
     removeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         li.remove();
-        
+        removeTask(taskText);
     });
 
     li.appendChild(removeBtn);
     taskList.appendChild(li);
 
     taskInput.value = '';
+}
+
 
