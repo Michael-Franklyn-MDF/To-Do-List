@@ -1,111 +1,100 @@
-const taskInput = document.getElementById('tasknput')
-const addBtn = document.getElementById('addBtn')
-const taskList = document.getElementById('taskList')
+// Simple To-Do app
+const taskInput = document.getElementById('taskInput');
+const addBtn = document.getElementById('addBtn');
+const taskList = document.getElementById('taskList');
 
-//Save Tasks
-document.addEventListener('DOMContentLoaded', loadTask);
+// Utility: generate a short unique id
+function uid() {
+  return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+}
 
-// add new task
-addBtn.addEventListener('click', () => {
-    const taskText = taskInput.value.trim();
-    if(taskText === '');
-
-    addTaskToDOM(taskText);
-    saveTask(taskText);
-
-    taskInput.value = '';
+// Load tasks on startup
+document.addEventListener('DOMContentLoaded', () => {
+  loadTasks();
 });
 
-//Add task to the UI
-function addTaskToDOM(taskText, done = false){
-    const li = taskText;
+// Add by button
+addBtn.addEventListener('click', () => {
+  const text = taskInput.value.trim();
+  if (!text) return; // ignore empty
+  const task = { id: uid(), text, done: false };
+  saveTask(task);
+  addTaskToDOM(task);
+  taskInput.value = '';
+  taskInput.focus();
+});
 
-    if (done) li.classList.add('done');
+// Add by Enter key
+taskInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') addBtn.click();
+});
 
-    //mark as done
-    li.addEventListener('click', () =>{
-        li.classList.toggle('done');
-        updateTaskStatus(taskText, li.classList.contains('done'));
-    })
+function createTaskElement(task) {
+  const li = document.createElement('li');
+  li.dataset.id = task.id;
 
-    //remove btn
-    const removeBtn = document.createElement('button')
+  const span = document.createElement('span');
+  span.textContent = task.text;
+  li.appendChild(span);
 
-    removeBtn.textContent = 'Remove';
-    removeBtn.classList.add = ('remove-btn');
-    removeBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        li.remove();
-        removeTask(taskText);
-    });
+  if (task.done) li.classList.add('done');
 
-    li.appendChild(removeBtn);
-    taskList.appendChild(li);
+  // toggle done when clicking the item (but not the remove button)
+  li.addEventListener('click', (e) => {
+    if (e.target.classList.contains('remove-btn')) return;
+    li.classList.toggle('done');
+    updateTaskStatus(task.id, li.classList.contains('done'));
+  });
 
-    taskInput.value = '';
+  // remove button
+  const removeBtn = document.createElement('button');
+  removeBtn.type = 'button';
+  removeBtn.className = 'remove-btn';
+  removeBtn.textContent = 'Remove';
+  removeBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    removeTask(task.id);
+    li.remove();
+  });
+
+  li.appendChild(removeBtn);
+  return li;
 }
 
-// Save task to local storage
-function saveTask(taskText){
-    const tasks = getTasks();
-    tasks.push({text:taskText, done: false });
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+function addTaskToDOM(task) {
+  const li = createTaskElement(task);
+  taskList.appendChild(li);
 }
 
-//Load tasks from localStorage
-function loadTasks() {
-    const tasks = getTasks();
-    tasks.forEach(task => addTaskToDOM(task.text, task.done));
-}
-
-// Get all tasks from local storage
-function getTasks(){
+// Storage helpers
+function getTasks() {
+  try {
     return JSON.parse(localStorage.getItem('tasks')) || [];
+  } catch (e) {
+    return [];
+  }
 }
 
-//Remove tasks from local storage
-function removeTask(taskText) {
-  const tasks = getTasks().filter(task => task.text !== taskText);
+function saveTask(task) {
+  const tasks = getTasks();
+  tasks.push(task);
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Update done/undone status in localStorage
-function updateTaskStatus(taskText, done) {
+function loadTasks() {
   const tasks = getTasks();
-  const updatedTasks = tasks.map(task => 
-    task.text === taskText ? { ...task, done } : task
-  );
-  localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+  tasks.forEach((t) => addTaskToDOM(t));
 }
 
-
-// --------------------
-// SIMPLE TESTS SECTION
-// --------------------
-function runTests() {
-  console.log("Running To-Do List Tests...");
-
-  // Clear localStorage before testing
-  localStorage.clear();
-
-  // 1️⃣ Test: Add Task
-  saveTask("Test Task 1");
-  const tasks1 = getTasks();
-  console.assert(tasks1.length === 1, "❌ Add Task failed");
-  console.assert(tasks1[0].text === "Test Task 1", "❌ Task name incorrect");
-
-  // 2️⃣ Test: Mark Task as Done
-  updateTaskStatus("Test Task 1", true);
-  const tasks2 = getTasks();
-  console.assert(tasks2[0].done === true, "❌ Mark as done failed");
-
-  // 3️⃣ Test: Remove Task
-  removeTask("Test Task 1");
-  const tasks3 = getTasks();
-  console.assert(tasks3.length === 0, "❌ Remove Task failed");
-
-  console.log("✅ All tests completed!");
+function removeTask(id) {
+  const tasks = getTasks().filter((t) => t.id !== id);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Uncomment this line to run the tests automatically on load:
-runTests();
+function updateTaskStatus(id, done) {
+  const tasks = getTasks().map((t) => (t.id === id ? { ...t, done } : t));
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+// Small accessibility improvement: focus input on page load
+taskInput && taskInput.focus();
