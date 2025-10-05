@@ -9,6 +9,14 @@ document.addEventListener('DOMContentLoaded', loadTask);
 addBtn.addEventListener('click', () => {
     const taskText = taskInput.value.trim();
     if(taskText === '');
+
+    addTaskToDOM(taskText);
+    saveTask(taskText);
+
+    taskInput.value = '';
+});
+
+
             
     const li = document.createElement('Li')
     li.textContent = taskText;
