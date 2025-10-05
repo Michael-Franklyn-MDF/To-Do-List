@@ -16,23 +16,27 @@ addBtn.addEventListener('click', () => {
     taskInput.value = '';
 });
 
+//Add task to the UI
+function addTaskToDOM(taskText, done = false){
+    const li = taskText;
 
-            
-    const li = document.createElement('Li')
-    li.textContent = taskText;
+    if (done) li.classList.add('done');
 
     //mark as done
     li.addEventListener('click', () =>{
         li.classList.toggle('done');
-     })
+        updateTaskStatus(taskText, li.classList.contains('done'));
+    })
+}
     //remove btn
     const removeBtn = document.createElement('button')
 
     removeBtn.textContent = 'Remove';
     removeBtn.classList.add = ('remove-btn');
-    removeBtn.addEventListener('click', () => {
+    removeBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         li.remove();
+        
     });
 
     li.appendChild(removeBtn);
@@ -40,4 +44,3 @@ addBtn.addEventListener('click', () => {
 
     taskInput.value = '';
 
-});
