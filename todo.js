@@ -77,3 +77,35 @@ function updateTaskStatus(taskText, done) {
   );
   localStorage.setItem('tasks', JSON.stringify(updatedTasks));
 }
+
+
+// --------------------
+// SIMPLE TESTS SECTION
+// --------------------
+function runTests() {
+  console.log("Running To-Do List Tests...");
+
+  // Clear localStorage before testing
+  localStorage.clear();
+
+  // 1️⃣ Test: Add Task
+  saveTask("Test Task 1");
+  const tasks1 = getTasks();
+  console.assert(tasks1.length === 1, "❌ Add Task failed");
+  console.assert(tasks1[0].text === "Test Task 1", "❌ Task name incorrect");
+
+  // 2️⃣ Test: Mark Task as Done
+  updateTaskStatus("Test Task 1", true);
+  const tasks2 = getTasks();
+  console.assert(tasks2[0].done === true, "❌ Mark as done failed");
+
+  // 3️⃣ Test: Remove Task
+  removeTask("Test Task 1");
+  const tasks3 = getTasks();
+  console.assert(tasks3.length === 0, "❌ Remove Task failed");
+
+  console.log("✅ All tests completed!");
+}
+
+// Uncomment this line to run the tests automatically on load:
+runTests();
