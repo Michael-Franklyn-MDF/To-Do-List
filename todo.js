@@ -69,4 +69,11 @@ function removeTask(taskText) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-
+// Update done/undone status in localStorage
+function updateTaskStatus(taskText, done) {
+  const tasks = getTasks();
+  const updatedTasks = tasks.map(task => 
+    task.text === taskText ? { ...task, done } : task
+  );
+  localStorage.setItem('tasks', JSON.stringify(updatedTasks));
+}
