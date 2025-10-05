@@ -2,6 +2,9 @@ const taskInput = document.getElementById('tasknput')
 const addBtn = document.getElementById('addBtn')
 const taskList = document.getElementById('taskList')
 
+//Save Tasks
+document.addEventListener('DOMContentLoaded', loadTask);
+
 // add new task
 addBtn.addEventListener('click', () => {
     const taskText = taskInput.value.trim();
