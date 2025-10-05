@@ -45,4 +45,12 @@ function addTaskToDOM(taskText, done = false){
     taskInput.value = '';
 }
 
+// Save task to local storage
+function saveTask(taskText){
+    const tasks = getTasks();
+    tasks.push({text:taskText, done: false });
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
+//Load tasks from localStorage
 
