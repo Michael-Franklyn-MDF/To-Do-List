@@ -53,4 +53,9 @@ function saveTask(taskText){
 }
 
 //Load tasks from localStorage
+function loadTasks() {
+    const tasks = getTasks();
+    tasks.forEach(task => addTaskToDOM(task.text, task.done));
+}
+
 
