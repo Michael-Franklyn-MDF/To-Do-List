@@ -64,4 +64,9 @@ function getTasks(){
 }
 
 //Remove tasks from local storage
+function removeTask(taskText) {
+  const tasks = getTasks().filter(task => task.text !== taskText);
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
+
 
