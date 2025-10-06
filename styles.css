@@ -16,6 +16,12 @@ body{
     text-align: center;
 }
 
+.footer{
+  margin-top: 16px;
+  color: #666;
+  font-size: 12px;
+}
+
 h1{
     margin-bottom: 20px;
 }
