@@ -6,14 +6,14 @@
 ## Description:
     -   A Simple Web application that ** adds **, ** deletes **, and ** Manages daily tasks **.
 
-##Features:
+## Features:
     1. Add New Tasks
     2. Delete Existing Tasks
     3. Manage Daily Tasks
     4. Mark as Done
     5. Simple and Responsive design
 
-##Technologies:
+## Technologies:
     -   ** HTML ** - Structure
     -   ** CSS ** - Styling
     -   ** JavaScript ** - Interactivity
