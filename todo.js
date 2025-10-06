@@ -1,4 +1,3 @@
-// Simple To-Do app
 const taskInput = document.getElementById('taskInput');
 const addBtn = document.getElementById('addBtn');
 const taskList = document.getElementById('taskList');
@@ -8,7 +7,6 @@ function uid() {
   return Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
 }
 
-// Load tasks on startup
 document.addEventListener('DOMContentLoaded', () => {
   loadTasks();
 });
@@ -24,7 +22,6 @@ addBtn.addEventListener('click', () => {
   taskInput.focus();
 });
 
-// Add by Enter key
 taskInput.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') addBtn.click();
 });
@@ -66,7 +63,7 @@ function addTaskToDOM(task) {
   taskList.appendChild(li);
 }
 
-// Storage helpers
+// Storage helpers - some AI help.
 function getTasks() {
   try {
     return JSON.parse(localStorage.getItem('tasks')) || [];
@@ -96,5 +93,4 @@ function updateTaskStatus(id, done) {
   localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
-// Small accessibility improvement: focus input on page load
 taskInput && taskInput.focus();
