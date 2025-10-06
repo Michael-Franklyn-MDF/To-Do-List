@@ -20,6 +20,10 @@ h1{
     margin-bottom: 20px;
 }
 
+h3{
+  margin-bottom: 20px;
+}
+
 .input-area{
     display: flex;
     gap: 10px;
