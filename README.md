@@ -1,4 +1,4 @@
-##                             To-Do List
+## To-Do List
 
 ## Author:
     -   Michael David Franklyn 
@@ -14,9 +14,9 @@
     5. Simple and Responsive design
 
 ## Technologies:
-    -   # HTML - Structure
-    -   # CSS - Styling
-    -   # JavaScript - Interactivity
+    -   HTML - Structure
+    -   CSS - Styling
+    -   JavaScript - Interactivity
 
 
 
