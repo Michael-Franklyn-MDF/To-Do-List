@@ -17,9 +17,16 @@ body{
 }
 
 .footer{
-  margin-top: 16px;
-  color: #666;
+  margin-top: 18px;
+  padding-top: 12px;
+  color: #6b6b6b;
   font-size: 12px;
+  border-top: 1px solid #eef2f3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  opacity: 0.9;
 }
 
 h1{
@@ -86,4 +93,15 @@ li.done {
 
 .remove-btn:hover {
   background: darkred;
+}
+
+/* container footer uses .footer */
+
+.footer a{
+  color: #007bff;
+  text-decoration: none;
+}
+
+.footer a:hover{
+  text-decoration: underline;
 }
